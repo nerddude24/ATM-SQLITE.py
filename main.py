@@ -1,6 +1,4 @@
 from account import Account
-import json
-import os
 import sqlite3
 
 accounts = {}
