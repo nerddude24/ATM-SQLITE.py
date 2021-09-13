@@ -10,6 +10,8 @@ active_account = None
 con = sqlite3.connect(data_path)
 c = con.cursor()
 
+undr = 50
+
 
 def check_for_accounts():
     global accounts
@@ -38,7 +40,8 @@ def check_for_accounts():
 def login():
     global active_account
     if len(accounts) <= 0:
-        print("NO ACCOUNTS FOUND, PLEASE CREATE ONE.")
+        print("_" * undr)
+        print("NO ACCOUNTS FOUND, PLEASE CREATE ONE.\n", "_" * undr)
         main()
         return
     acc = Account("", "", 0)
@@ -59,7 +62,8 @@ def login():
             main()
             return
 
-    print("Wrong password or username, try again\n\n\n")
+    print("_" * undr)
+    print("Wrong password or username, try again\n", "_" * undr)
     login()
 
 
@@ -69,11 +73,13 @@ def signup():
     while True:
         name = input("Please enter your name\n>").strip()
         if name == "":
-            print("Name can't be empty...")
+            print("_" * undr)
+            print("Name can't be empty...\n", "_" * undr)
             continue
         for i in range(0, len(accounts)):
             if name == accounts[str(i)]["name"]:
-                print(f"ACCOUNT WITH NAME: '{name}' ALREADY EXISTS")
+                print("_" * undr)
+                print(f"ACCOUNT WITH NAME: '{name}' ALREADY EXISTS\n", "_" * undr)
                 main()
                 return
         acc.name = name
@@ -83,12 +89,14 @@ def signup():
         password_confirm = input("Please confirm your password again\n>").strip()
         if password == password_confirm:
             if password == "":
-                print("ERR PASSWORD EMPTY\n\n\n")
+                print("_" * undr)
+                print("ERR PASSWORD EMPTY\n", "_" * undr)
                 continue
             acc.password = password
             break
         else:
-            print("ERR PASSWORD INCORRECT\n\n\n")
+            print("_" * undr)
+            print("ERR PASSWORD INCORRECT\n", "_" * undr)
 
     while True:
         credit = input("How much money do you want to deposit?\n>")
@@ -96,7 +104,8 @@ def signup():
             acc.credit = int(credit)
             break
         else:
-            print("error credit is a number idiot.")
+            print("_" * undr)
+            print("error credit is a number idiot.\n", "_" * undr)
 
     if not str(len(accounts)) in accounts:
         accounts[str(len(accounts))] = {
@@ -157,7 +166,8 @@ def get_operation():
     elif res == "exit":
         return
     else:
-        print("err, please choose either login or signup\n")
+        print("_" * undr)
+        print("err, please see help for commands\n", "_" * undr)
 
     get_operation()
 
@@ -200,7 +210,8 @@ def get_operation_loggedin():
             save_data_to_file()
             print(f"You now have {active_account.credit}$.")
         except:
-            print("err, please try again")
+            print("_" * undr)
+            print("err, please try again\n", "_" * undr)
     elif res == "withdraw":
         try:
             amount = abs(int(input("How much do you want to withdraw?\n>>>")))
@@ -214,7 +225,8 @@ def get_operation_loggedin():
             save_data_to_file()
             print(f"You now have {active_account.credit}$.")
         except:
-            print("err, please try again")
+            print("_" * undr)
+            print("err, please try again\n", "_" * undr)
     elif res == "logout":
         active_account = None
     elif res == "del acc":
@@ -225,7 +237,8 @@ def get_operation_loggedin():
     elif res == "exit":
         return
     else:
-        print("unkown command\n")
+        print("_" * undr)
+        print("unkown command\n", "_" * undr)
 
     main()
 
