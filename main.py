@@ -40,6 +40,7 @@ def login():
     if len(accounts) <= 0:
         print("NO ACCOUNTS FOUND, PLEASE CREATE ONE.")
         main()
+        return
     acc = Account("", "", 0)
     acc.name = input("Enter your name\n>").strip()
     acc.password = input("Enter your password\n>").strip()
@@ -56,7 +57,7 @@ def login():
             active_account = acc
             print("You have succesfully logged in!")
             main()
-            break
+            return
 
     print("Wrong password or username, try again\n\n\n")
     login()
@@ -74,6 +75,7 @@ def signup():
             if name == accounts[str(i)]["name"]:
                 print(f"ACCOUNT WITH NAME: '{name}' ALREADY EXISTS")
                 main()
+                return
         acc.name = name
         break
     while True:
@@ -215,11 +217,13 @@ def get_operation_loggedin():
             print("err, please try again")
     elif res == "logout":
         active_account = None
-        save_data_to_file()
     elif res == "del acc":
         ans = input("ARE YOU SURE? (Y/N)\n>").strip().lower()
         if ans == "y":
             remove_active_account()
+            return
+    elif res == "exit":
+        return
     else:
         print("unkown command\n")
 
@@ -233,11 +237,13 @@ def main():
             f"[{len(accounts)} Accounts Found], Would you like to login or signup? (login/signup/help)"
         )
         get_operation()
+        return
     else:
         print(
             f"You have {active_account.credit}$, What would like to do? (deposit, withdraw, logout,del acc)"
         )
         get_operation_loggedin()
+        return
 
 
 main()
